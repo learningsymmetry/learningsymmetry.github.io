@@ -1522,7 +1522,8 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 
 <div class="d-article">
-<p><span class="math display">\[
+<p hidden>
+<span class="math display">\[
 \newcommand{\part}{\partial}
 \newcommand{\R}{\mathbb{R}}
 \newcommand{\C}{\mathbb{C}}
@@ -1533,15 +1534,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 \newcommand{\dim}{\text{dim}}
 \newcommand{\HP}{\text{HP}}
 \]</span>
-### 1.1 Learning Functions</p>
+</p>
+<h3 id="learning-functions">1.1 Learning Functions</h3>
 <p>At its core, machine learning is about fitting functions to data. There is a function <span class="math inline">\(f: X\to Y\)</span> between two spaces that we’d like to learn. The input space <span class="math inline">\(X\)</span> might be text sequences, images encoded as arrays of pixels, sound waves, etc. Similarly, the output spaces <span class="math inline">\(Y\)</span> could be numbers, text, images, etc.</p>
 <p>For example, one might want to learn a function which takes as input an image of a person, and outputs an estimate of that person’s height: for this application, the input space would be the space of images, and the output space would be the space of positive real numbers. In image reconstruction, the input is a corrupted/low-quality image and the output is the original, high-quality version, so image reconstruction is a mapping from the space of images to itself. In audio transcription, the input is a person speaking and the output is the text of what was said, so audio transcription maps from the space of sound waves to the space of text strings. If we are instead interested in audio synthesis, we can simply reverse this, and instead learn a mapping from the space of text strings to the space of sound waves. You get the idea. This is a very flexible approach, and it can model all sorts of tasks.</p>
 <p>One particularly interesting setting is learning functions <span class="math inline">\(f : \R^2 \to \R^3\)</span>. This setting is useful for building intuition, because these functions can be rendered as an image. Each input <span class="math inline">\((x_1,x_2)\in \R^2\)</span> gives the coordinates of a particular pixel, and each output <span class="math inline">\((y_1, y_2, y_3) \in \R^3\)</span> gives the RGB color of that pixel.</p>
 <p>The central challenge of machine learning is to discover <span class="math inline">\(f\)</span> when we only have knowledge of its outputs on a set <span class="math inline">\(\{x_0, \cdots, x_n \} = S\subset X\)</span>, which we call the support set. Concretely, we have access to dataset of input-output pairs <span class="math inline">\((x_0, f(x_0) ), \cdots, (x_n, f(x_n))\)</span>. A way to think about the dataset is that we are only allowed to query the outputs of <span class="math inline">\(f\)</span> on inputs that belong to <span class="math inline">\(S\)</span>. So <span class="math inline">\(f|_S\)</span>, the restriction of <span class="math inline">\(f\)</span> to <span class="math inline">\(S\)</span>, is a mathematically convinient way to talk about the dataset.</p>
 <p></p>
 <p>For example, if we are trying to learn a function <span class="math inline">\(f : \R^2 \to \R^3\)</span>, the support <span class="math inline">\(S\)</span> would only contain a subset of all possible coordinates. Below, the image on the left shows a dataset <span class="math inline">\(f|_S\)</span> whose support <span class="math inline">\(S\)</span> is a patch of pixels. The job of a machine learning algorithm would be to use <span class="math inline">\(f|_S\)</span> to reconstruct the rest of the image function <span class="math inline">\(f\)</span> seen on the right.</p>
-<p>|<img src="https://i.imgur.com/hQcvK2Em.jpg" />| <img src="https://i.imgur.com/7GHaeYPm.jpg" />|
--—- | —–|</p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th><img src="https://i.imgur.com/hQcvK2Em.jpg" /></th>
+<th><img src="https://i.imgur.com/7GHaeYPm.jpg" /></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
 <p>The basic approach of machine learning is to construct a large space of functions, and then find a function in this space which agrees with <span class="math inline">\(f\)</span> on the support <span class="math inline">\(S\)</span>. For this to work well, we must be confident that the space of functions is large enough that it contains <span class="math inline">\(f\)</span> (or at least a close approximation). The most common way to construct such function spaces is via a parameterization <span class="math inline">\(h: X \times \R^p \to Y\)</span>, where <span class="math inline">\(\R^p\)</span> is the space of parameters. By picking different values <span class="math inline">\(w\in \R^p\)</span> we can control the behavior of the function <span class="math inline">\(h_w: X \to Y\)</span>, defined as <span class="math inline">\(h_w(x) = h(x, w)\)</span>. Two examples of function spaces constructed this way are:
 - <strong>Polynomials of degree</strong> <span class="math inline">\(d\)</span><strong>.</strong> We define <span class="math inline">\(h: (\R \times \R^{d+1}) \to \R\)</span> as <span class="math inline">\(h(x, w) = w_0 + w_1 x + \cdots + x^d w_d\)</span>.
 - <strong>Neural networks.</strong> We define <span class="math inline">\(h(x, w) = w_l \sigma( w_{l-1} \sigma(\cdots \sigma(w_1 x)))\)</span> where <span class="math inline">\(l\)</span> is the number of layers, <span class="math inline">\(w_i \in \R^{h_{i+1}\times h_i}\)</span> is a linear map from <span class="math inline">\(\R^{s_{i}}\)</span> to <span class="math inline">\(\R^{s_{i+1}}\)</span> and where <span class="math inline">\(\sigma\)</span> is any pointwise nonlinearity, like tanh or ReLU.</p>
