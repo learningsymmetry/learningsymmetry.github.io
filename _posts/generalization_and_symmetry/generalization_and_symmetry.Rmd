@@ -48,7 +48,8 @@ The central challenge of machine learning is to discover $f$ when we only have k
 
 For example, if we are trying to learn a function $f : \R^2 \to \R^3$, the support $S$ would only contain a subset of all possible coordinates. Below, the image on the left shows a dataset $f|_S$ whose support $S$ is a patch of pixels. The job of a machine learning algorithm would be to use $f|_S$ to reconstruct the rest of the image function $f$ seen on the right.
 
-![](https://i.imgur.com/hQcvK2Em.jpg)| ![](https://i.imgur.com/7GHaeYPm.jpg)
+|![](https://i.imgur.com/hQcvK2Em.jpg)| ![](https://i.imgur.com/7GHaeYPm.jpg)|
+\----- | -----|
 
 The basic approach of machine learning is to construct a large space of functions, and then find a function in this space which agrees with $f$ on the support $S$. For this to work well, we must be confident that the space of functions is large enough that it contains $f$ (or at least a close approximation). The most common way to construct such function spaces is via a parameterization $h: X \times \R^p \to Y$, where $\R^p$ is the space of parameters. By picking different values $w\in \R^p$ we can control the behavior of the function $h_w: X \to Y$, defined as $h_w(x) = h(x, w)$. Two examples of function spaces constructed this way are:
 - **Polynomials of degree** $d$**.** We define $h: (\R \times \R^{d+1}) \to \R$ as $h(x, w) = w_0 + w_1 x + \cdots + x^d w_d$.
