@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0">
+  <channel>
+    <title>Learning &amp; Symmetry Group</title>
+    <link>https://learningsymmetry.github.io/</link>
+    <atom:link href="https://learningsymmetry.github.io/index.xml" rel="self" type="application/rss+xml"/>
+    <description>Research homepage for the Learning &amp; Symmetry Group.
+</description>
+    <generator>Distill</generator>
+    <lastBuildDate>Sat, 10 Dec 2022 00:00:00 +0000</lastBuildDate>
+    <item>
+      <title>Generalization and Symmetry</title>
+      <dc:creator>Carles Gelada, Jacob Buckman</dc:creator>
+      <link>https://learningsymmetry.github.io/posts/generalization_and_symmetry</link>
+      <description>Understanding the problem of generalization, and motivating the study of symmetry as a solution.</description>
+      <guid>https://learningsymmetry.github.io/posts/generalization_and_symmetry</guid>
+      <pubDate>Sat, 10 Dec 2022 00:00:00 +0000</pubDate>
+    </item>
+  </channel>
+</rss>
