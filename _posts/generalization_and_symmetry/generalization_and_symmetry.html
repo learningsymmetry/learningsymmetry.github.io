@@ -1736,7 +1736,7 @@ But functions originating in the real world are not always conducive to mathemat
 </tbody>
 </table>
 <p>Note that these images play a very different role to the ones we’ve been considering. Before, the an image represented an <em>entire function</em>: each input was an <span class="math inline">\(x,y\)</span> pixel coordinate, and each output was an RGB color. But here, each image is only a <em>single point</em> in input space <span class="math inline">\(X\)</span>. The function <span class="math inline">\(f: \R^{30,000} \to \{-1, 1 \}\)</span> maps any image to one of two categories.</p>
-<p>What do symmetries on this space look like? Before, the group elements <span class="math inline">\(g\in G\)</span> sent each coordinate to another coordinate in a way that preserves the pixel’s color, now <span class="math inline">\(g\in G\)</span> sends each image to another image while preserving its class.
+<p>What do symmetries on this space look like? Before, the group elements <span class="math inline">\(g\in G\)</span> sent each coordinate to another coordinate in a way that preserves the pixel’s color; now, <span class="math inline">\(g\in G\)</span> sends each image to another image while preserving its class.
 Let’s build some intuition about what symmetries the function that classifies hotdogs might have. What type of movements of the 30,000-dimensional space preserve the class of the images?</p>
 <p>One example of such a symmetry might be “add ketchup”. For any image in the dataset, adding or removing ketchup will not change its class: a hotdog is still a hotdog with ketchup on it, and the Eiffel Tower is still <em>not</em> a hotdog, even if we slather it in condiments.</p>
 <table>
