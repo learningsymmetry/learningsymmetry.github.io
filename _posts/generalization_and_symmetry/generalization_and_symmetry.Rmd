@@ -59,6 +59,7 @@ For example, if we are trying to learn a function $f : \R^2 \to \R^3$, the suppo
 | ----- | -----|
 
 The basic approach of machine learning is to construct a large space of functions, and then find a function in this space which agrees with $f$ on the support $S$. For this to work well, we must be confident that the space of functions is large enough that it contains $f$ (or at least a close approximation). The most common way to construct such function spaces is via a parameterization $h: X \times \R^p \to Y$, where $\R^p$ is the space of parameters. By picking different values $w\in \R^p$ we can control the behavior of the function $h_w: X \to Y$, defined as $h_w(x) = h(x, w)$. Two examples of function spaces constructed this way are:
+
 - **Polynomials of degree** $d$**.** We define $h: (\R \times \R^{d+1}) \to \R$ as $h(x, w) = w_0 + w_1 x + \cdots + x^d w_d$.
 - **Neural networks.** We define $h(x, w) = w_l \sigma( w_{l-1} \sigma(\cdots \sigma(w_1 x)))$ where $l$ is the number of layers, $w_i \in \R^{h_{i+1}\times h_i}$ is a linear map from $\R^{s_{i}}$ to $\R^{s_{i+1}}$ and where $\sigma$ is any pointwise nonlinearity, like tanh or ReLU.
 
@@ -128,7 +129,8 @@ But our lack of theoretical understanding is not such a big problem because this
 
 In perhaps one of the most important and insightful experiments of deep learning, [Zhang et al.](https://arxiv.org/abs/1611.03530) took a variety of neural network architectures used in computer vision, and trained them to fit a few variations of ImageNet, a popular image classification dataset.
 The settings they consider are:
-- **Standard ImageNet.** The inputs were real-world images -- pictures of cats, dogs, etc. The outputs are the correct labels given by ImageNet. 
+
+- **Standard ImageNet.** The inputs were real-world images -- pictures of cats, dogs, etc. The outputs are the correct labels given by ImageNet.
 - **ImageNet with random labels.** The inputs were once again images from ImageNet dataset. However, the output labels were sampled at random from the set of all possible labels. (Sampling happened just once at the start of training.)
 - **Random inputs, random outputs.** The input images are sampled according to a uniform distribution, essentially generating white noise. The outputs are also selected at random. (Once again, sampling happened just once at the start of training, after which the dataset was held fixed.)
 
