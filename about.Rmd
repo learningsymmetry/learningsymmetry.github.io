@@ -1,5 +1,5 @@
 ---
-title: "About this blog"
+title: "About the L&SG"
 ---
 
 ```{r setup, include=FALSE}
