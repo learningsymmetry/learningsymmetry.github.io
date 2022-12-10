@@ -12,6 +12,8 @@ date: 12-10-2022
 output:
   distill::distill_article:
     self_contained: false
+    toc: true
+
 ---
 
 ```{r setup, include=FALSE}
@@ -35,9 +37,9 @@ $$
 $$
 </p>
 
-### 1.1 Learning Functions
+### 1.1) The Learning of Functions
 
-At its core, machine learning is about fitting functions to data. There is a function $f: X\to Y$ between two spaces that we'd like to learn. The input space $X$ might be text sequences, images encoded as arrays of pixels, sound waves, etc. Similarly, the output spaces $Y$ could be numbers, text, images, etc.
+At its core, machine learning is about fitting functions to data. There is a target function $f: X\to Y$ between two spaces that we'd like to learn. The input space $X$ might be text sequences, images encoded as arrays of pixels, sound waves, etc. Similarly, the output spaces $Y$ could be numbers, text, images, etc.
 
 For example, one might want to learn a function which takes as input an image of a person, and outputs an estimate of that person's height: for this application, the input space would be the space of images, and the output space would be the space of positive real numbers. In image reconstruction, the input is a corrupted/low-quality image and the output is the original, high-quality version, so image reconstruction is a mapping from the space of images to itself. In audio transcription, the input is a person speaking and the output is the text of what was said, so audio transcription maps from the space of sound waves to the space of text strings. If we are instead interested in audio synthesis, we can simply reverse this, and instead learn a mapping from the space of text strings to the space of sound waves. You get the idea. This is a very flexible approach, and it can model all sorts of tasks.
 
@@ -46,7 +48,9 @@ One particularly interesting setting is learning functions $f : \R^2 \to \R^3$. 
 
 The central challenge of machine learning is to discover $f$ when we only have knowledge of its outputs on a set $\{x_0, \cdots, x_n \} = S\subset X$, which we call the support set. Concretely, we have access to dataset of input-output pairs $(x_0, f(x_0) ), \cdots, (x_n, f(x_n))$. A way to think about the dataset is that we are only allowed to query the outputs of $f$ on inputs that belong to $S$. So $f|_S$, the restriction of $f$ to $S$, is a mathematically convinient way to talk about the dataset.
 
-\footnote{Some might raise concerns that this definition of machine learning is too narrow. For example, it doesn't allow for cases where $f$ outputs a distribution, and so the dataset is composed of examples $(x_i, y_i)$ where $y_i$ is merely *sampled* from $f(x_i)$. Although that setting is important, we choose to ignore it for now; the deterministic case is simpler, and the issues we study are deeper than the superficial difference between trying to recover a function or a distribution. Understanding one will be the key to understanding the other. Similar tradeoffs are made through the document, prioritizing simplicity over generality as long as the simplification does not impact the central issues.}
+<aside style="margin-bottom: -500px">
+Some might raise concerns that this definition of machine learning is too narrow. For example, it doesn't allow for cases where $f$ outputs a distribution, and so the dataset is composed of examples $(x_i, y_i)$ where $y_i$ is merely *sampled* from $f(x_i)$. Although that setting is important, we choose to ignore it for now; the deterministic case is simpler, and the issues we study are deeper than the superficial difference between trying to recover a function or a distribution. Understanding one will be the key to understanding the other. Similar tradeoffs are made through the document, prioritizing simplicity over generality as long as the simplification does not impact the central issues.
+</aside>
 
 
 For example, if we are trying to learn a function $f : \R^2 \to \R^3$, the support $S$ would only contain a subset of all possible coordinates. Below, the image on the left shows a dataset $f|_S$ whose support $S$ is a patch of pixels. The job of a machine learning algorithm would be to use $f|_S$ to reconstruct the rest of the image function $f$ seen on the right.
@@ -64,9 +68,7 @@ Learning is often described as the problem of finding the optimal parameters, de
 $$\underset{{w\in \R^p}}{\text{argmin}} \: L(f|_S, w)$$
 But in the context of modern machine learning, this is a fundamentally flawed definition. This is because, for the function spaces $h$ that we use in practice, there is a vast set of parameters $w$ that all equivalently minimize the loss, but which produce functions $h_w$ that behave completely differently outside of $S$. The implications of this will be discussed in greater depth in Section 1.3; for now, all we need to understand is that it's not enough to talk about the argmin, we need to be thinking about *which* argmin $w$ we pick. To understand a machine learning algorithm, it is important to look carefully at the specific method used to choose a $w$ that fits the data.
 
-In any modern deep learning scenario, that method is **gradient descent**. It works by changing the weights through time according to the differential equation $\frac{d w}{d t} = -\nabla_w L(f|_S, w)$, where $\nabla_w L(f|_S, w)$ is the gradient of $L$ w.r.t. the weights $w$.
-\footnote{For simplicity, we discuss only vanilla full-batch gradient descent. In practice it is more common to use variants such as SGD, momentum, Adam, etc.}
-The gradient can be thought of as the best linear approximation to the loss function at the point $w$: it is a vector pointing in the direction where the loss function increases the fastest, and with a magnitude proportional how fast the loss function is increasing. Since the goal of our algorithm is to decrease the loss, we update the parameters in the opposite direction of this vector.
+In any modern deep learning scenario, that method is **gradient descent**. It works by changing the weights through time according to the differential equation $\frac{d w}{d t} = -\nabla_w L(f|_S, w)$, where $\nabla_w L(f|_S, w)$ is the gradient of $L$ w.r.t. the weights $w$.^[For simplicity, we discuss only vanilla full-batch gradient descent. In practice it is more common to use variants such as SGD, momentum, Adam, etc.] The gradient can be thought of as the best linear approximation to the loss function at the point $w$: it is a vector pointing in the direction where the loss function increases the fastest, and with a magnitude proportional how fast the loss function is increasing. Since the goal of our algorithm is to decrease the loss, we update the parameters in the opposite direction of this vector.
 
 As with any differential equation, one must specify initial conditions. In our case, this means choosing parameters $w_0$ at $t=0$. Without loss of generality, we can simply assume that $w_0=0$ because any other choice of initial conditions can be absorbed into the the parametrization $h$. Since lot of the objects we'll be considering depend on $w_0$, by absorbing the initial conditions into $h$, we avoid having to keep track an extra variable $w_0$. A properly-constructed loss function will result in a differential equation on $w_t$ that converges to a point $w_\infty$. We'll refer to $w_\infty$ as the *solution* learned by gradient decent.
 
@@ -81,12 +83,15 @@ Even though this is a very insightful way to think about machine learning, one t
 -->
 
 
-### 1.2 The Magic of Generalization
+### 1.2) The Magic of Generalization
 
 Ultimately, the point of learning a function $h_w$ is that we'd like to know $f(x)$ for $x\not\in S$, i.e., points outside of the support. (After all, if we wanted to know $f(x)$ for $x\in S$, we could just look it up using the dataset.) So, we find $w$ for which $h(x_i, w) = f(x_i), \;\forall x_i \in S$ by minimizing $L(f|_S,w)$ with gradient descent, and we hope that this results in an $h_w$ which is similar to $f$ elsewhere. If it is, we say the model *generalizes*.
 
 A way to measure how well a model $h_w$ generalizes is by checking if it fits the data on a test support $S'\subset X$, where a test support is a collection of points $x'_i \in S'$ for which we also know the values $f(x'_i)$, but which we never used during the training of the parameters $w$. After we've found some parameters $w$ that fit $f|_S$, we measure whether $h_w(x'_i) = f(x'_i)$ on $x'_i \in S'$, and the more points it gets correct, the better it generalizes.
-\footnote{In this discussion we consider fitting to be a binary yes/no: either a prediction is correct, or it is not. This is a coarse notion of fitting, and inadequate for settings where perfect answers are impossible. However, it can easily be generalized to these instances. For example, when the target lives in $\mathbb{R}$, we might prefer a more relaxed notion of approximate fitting that e.g. considers a point to be correctly fit whenever some scalar error is below a threshold.}
+
+<aside style="margin-bottom: -500px">
+In this discussion we consider fitting to be a binary yes/no: either a prediction is correct, or it is not. This is a coarse notion of fitting, and inadequate for settings where perfect answers are impossible. However, it can easily be generalized to these instances. For example, when the target lives in $\mathbb{R}$, we might prefer a more relaxed notion of approximate fitting that e.g. considers a point to be correctly fit whenever some scalar error is below a threshold.
+</aside>
 
 A useful tool for thinking about generalization is to consider a partition of $X$ into its *correct* and *error* subsets, denoted $X_c$ and $X_e$ respectively, where $X_c = \{x\in X \: |\ h_w(x) = f(x) \}$ is the subset where $h_w$ correctly fits $f$ and $X_e = X-X_c$ is the region where it makes errors. Of course, these are purely theoretical objects, since knowing the regions $X_c, X_e$ requires acccess to the unknown function $f$. Yet, they give us a natural way to think about generalization: a model is generalizing well when $X_c$ is much larger than $S$. This setup makes it evident that generalization is not naturally a scalar quantity: different models might make correct predictions on equally-large but *completely different* regions of $X$. In terms of test-sets, this is like saying that how well a model seems to generalize is dependent on the test points $S'\subset X$ on which you choose measure it.
 
@@ -113,12 +118,12 @@ While the datasets used in training are as large as technologically viable, the 
 
 How can neural networks trained with gradient descent possibly return so much more than they are given? That is fundamental mystery of generalization.
 
-### 1.3 The Overparametrized Regime
+### 1.3) The Overparametrized Regime
 
 Before discussing the ability of neural networks to generalize outside of the support $S$, it is worthwhile to first consider why gradient descent is even able to find parameters which correctly fit $f|_S$. You'll see how thinking about this question will make the mystery of generalization seem even more daunting.
 
 An important fact to keep in mind is that modern ML tends to use parameter spaces $\R^p$ which are of much higher dimensionality than $|S|$, the number of datapoints in our dataset. If we are using a polynomial function space, we can use [Lagrange polynomials](https://en.wikipedia.org/wiki/Lagrange_polynomial) to show that for any function $f$, if $|S| < p$, there will always exist parameters $w\in \R^p$ with $h_w(x) = f(x)$ for all $x\in S$.  More over, gradient descent (with a reasonably defined loss function) is guaranteed to find one of these solutions. We have some similar results for neural networks: an immediate consequence of the [universal function approximation theorems](https://en.wikipedia.org/wiki/Universal_approximation_theorem) is that there exist parameters $w$ that fit the dataset if $p$ is large enough. Showing that gradient descent would *find* this solution is a different story though: as far as we know, no such results exist
-\footnote{Outside of limiting cases with specialized parameterizations, such as [NTK](https://en.wikipedia.org/wiki/Neural_tangent_kernel).}
+^[Outside of limiting cases with specialized parameterizations, such as [NTK](https://en.wikipedia.org/wiki/Neural_tangent_kernel).]
 But our lack of theoretical understanding is not such a big problem because this is a question that can be answered empirically.
 
 In perhaps one of the most important and insightful experiments of deep learning, [Zhang et al.](https://arxiv.org/abs/1611.03530) took a variety of neural network architectures used in computer vision, and trained them to fit a few variations of ImageNet, a popular image classification dataset.
@@ -141,7 +146,7 @@ To be clear, the point of this section is not to say that real world problems ar
 
 Therefore, in this line of work, we will always assume that we are overparametrized (i.e. that we have enough parameters that we could fit any $f|_S$ on the support $S$), and also that $f = h_w$ for some $w$ (i.e. we don't want to be disacted by "capacity" concerns). This gives as a mathematically elegant setting where we can study the magic of generalization. 
 
-### 1.4 The Goal of Generalization Theory
+### 1.4) The Goal of Generalization Theory
 
 It's not entirely obvious what it would even mean for us to have "a theory of how neural networks learn". In the natural sciences, such as physics, the objective when developing a mathematical theory usually consists of finding a set of equations that accurately model the real world. But we *already have* the equations that govern how neural networks learn (namely, the equations of gradient descent and of the parametrization $h$). Instead, we are trying to study an *emergent phenomena* of the learning dynamics: the fact that models trained in this manner generalize well on real-world tasks. We aim to understand how neural networks learn to behave in unseen situations, how they "form beliefs" about the world.
 
@@ -169,7 +174,7 @@ Ultimately, the test of a good theory is whether it helps us build previously im
 - **Just looking at $f|_S$, can we be confident that $h(w_\infty) = f$?** If you are given the list $1,2,3,4,5,6,7,8,9,10,11$ you will be able to continue the sequence, but if instead you were given the list $1,6,11,2,9,10,3,7,8,4,5$ you'd wouldn't be able to do so (at least, not with any degree of confidence). Analogously, a neural network may sometimes be trained on a dataset for which it can confidently generalize, and other times be given a dataset with no structure or patterns at all. Can we construct an algorithm that can tell the difference?
 - **In what regions of $X$ can we be confident that the outputs of $f$ and $h_{w_\infty}$ match?** This is just an extension of the previous question, but one of great practical importance. Very often, we have models that generalize well, but nonetheless fail to learn $f$ perfectly. In other words, the correct set $X_c$ might be very large, but $X_c \not=X$. We'd like to know on which inputs $x \in X$ we can trust the predictions $h(x,w_\infty)$. Of course, we are just describing a neural network uncertainty method, but coming at it from a different angle than is typical. The central question isn't really "where should we be uncertain about the outputs of a neural network?". Instead, we should be asking: "why would we *ever* trust the outputs of $h(x,w_\infty)$ for $x \not\in S$?"
 
-### 1.5 Symmetry and Generalization
+### 1.5) Symmetry and Generalization
 
 In this section, we'll switch from describing the problem, to describing our approach to solving it. Our central hypothesis is that the thing that makes functions learnable is *symmetry*. The symmetry we are referring to is, intuitively, the exact same idea that you learned in grade school. This idea has a rigorous mathematical definition given by the field of *group theory*.
 
@@ -204,7 +209,7 @@ This idea is deeply connected to Occam's Razor: "if you have competing theories,
 
 Much of what we will be doing in the following articles is to define precisely what it means for $f|_S$ to contain symmetry. Learning via gradient descent will be seen to be equivalent to doing two things: first, extracting a group $G$ out of the support $S$, then using $f|_S$ together with $G$ to fill in the missing data, and produce the final learned funciton $h_{w_\infty}$. 
 
-### 1.6 Symmetries in the Real World
+### 1.6) Symmetries in the Real World
 
 In the section above, we have given examples of symmetry using functions $f : \R^2 \to \R^3$, which can be visualized as images. Of course, most machine learning applications don't deal with function spaces whose input is 2-dimensional. In computer vision, for example, the input to our function space might be an arrray of 100x100 RGB pixels, and so the dimensionality of the input space $X$ is 30,000. To build intuition, consider the following dataset for an image classification task:
 
@@ -228,7 +233,7 @@ We could go on and on, filling endless pages stating all the ways one can modify
 
 (Well...at least, that is our theory.)
 
-### 1.7 Conclusions
+### 1.7) Conclusions
 
 We've discussed how exceptional the phenomenon of generalization of machine learning models (and of neural networks in particular) really is. And we have seen how experiments showing that neural networks are overparameterized imply that the key to understanding generalization lies in the way gradient descent selects a solution among the many that minimize the loss in the train set.
 
