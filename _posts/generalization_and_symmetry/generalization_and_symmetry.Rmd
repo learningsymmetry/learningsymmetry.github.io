@@ -37,7 +37,7 @@ $$
 $$
 </p>
 
-### 1.1) The Learning of Functions
+## 1.1) The Learning of Functions
 
 At its core, machine learning is about fitting a function to data. There is a target function $f: X\to Y$ between two spaces that we'd like to learn. The input space $X$ might be text sequences, images encoded as arrays of pixels, sound waves, etc. Similarly, the output space $Y$ could be numbers, text, images, etc.
 
@@ -84,7 +84,7 @@ Even though this is a very insightful way to think about machine learning, one t
 -->
 
 
-### 1.2) The Magic of Generalization
+## 1.2) The Magic of Generalization
 
 Ultimately, the point of learning a function $h_w$ is that we'd like to know $f(x)$ for $x\not\in S$, i.e., points outside of the support. (After all, if we wanted to know $f(x)$ for $x\in S$, we could just look it up using the dataset.) So, we find $w$ for which $h(x_i, w) = f(x_i), \;\forall x_i \in S$ by minimizing $L(f|_S,w)$ with gradient descent, and we hope that this results in an $h_w$ which is similar to $f$ elsewhere. If it is, we say the model *generalizes*.
 
@@ -119,7 +119,7 @@ While the datasets used in training are as large as technologically viable, the 
 
 How can neural networks trained with gradient descent possibly return so much more than they are given? That is fundamental mystery of generalization.
 
-### 1.3) The Overparametrized Regime
+## 1.3) The Overparametrized Regime
 
 Before discussing the ability of neural networks to generalize outside of the support $S$, it is worthwhile to first consider why gradient descent is even able to find parameters which correctly fit $f|_S$. You'll see how thinking about this question will make the mystery of generalization seem even more daunting.
 
@@ -148,7 +148,7 @@ To be clear, the point of this section is not to say that real world problems ar
 
 Therefore, in this line of work, we will always assume that we are overparametrized (i.e. that we have enough parameters that we could fit any $f|_S$ on the support $S$), and also that $f = h_w$ for some $w$ (i.e. we don't want to be disacted by "capacity" concerns). This gives as a mathematically elegant setting where we can study the magic of generalization. 
 
-### 1.4) The Goal of Generalization Theory
+## 1.4) The Goal of Generalization Theory
 
 It's not entirely obvious what it would even mean for us to have "a theory of how neural networks learn". In the natural sciences, such as physics, the objective when developing a mathematical theory usually consists of finding a set of equations that accurately model the real world. But we *already have* the equations that govern how neural networks learn (namely, the equations of gradient descent and of the parametrization $h$). Instead, we are trying to study an *emergent phenomena* of the learning dynamics: the fact that models trained in this manner generalize well on real-world tasks. We aim to understand how neural networks learn to behave in unseen situations, how they "form beliefs" about the world.
 
@@ -176,7 +176,7 @@ Ultimately, the test of a good theory is whether it helps us build previously im
 - **Just looking at $f|_S$, can we be confident that $h(w_\infty) = f$?** If you are given the list $1,2,3,4,5,6,7,8,9,10,11$ you will be able to continue the sequence, but if instead you were given the list $1,6,11,2,9,10,3,7,8,4,5$ you'd wouldn't be able to do so (at least, not with any degree of confidence). Analogously, a neural network may sometimes be trained on a dataset for which it can confidently generalize, and other times be given a dataset with no structure or patterns at all. Can we construct an algorithm that can tell the difference?
 - **In what regions of $X$ can we be confident that the outputs of $f$ and $h_{w_\infty}$ match?** This is just an extension of the previous question, but one of great practical importance. Very often, we have models that generalize well, but nonetheless fail to learn $f$ perfectly. In other words, the correct set $X_c$ might be very large, but $X_c \not=X$. We'd like to know on which inputs $x \in X$ we can trust the predictions $h(x,w_\infty)$. Of course, we are just describing a neural network uncertainty method, but coming at it from a different angle than is typical. The central question isn't really "where should we be uncertain about the outputs of a neural network?". Instead, we should be asking: "why would we *ever* trust the outputs of $h(x,w_\infty)$ for $x \not\in S$?"
 
-### 1.5) Symmetry and Generalization
+## 1.5) Symmetry and Generalization
 
 In this section, we'll switch from describing the problem, to describing our approach to solving it. Our central hypothesis is that the thing that makes functions learnable is *symmetry*. The symmetry we are referring to is, intuitively, the exact same idea that you learned in grade school. This idea has a rigorous mathematical definition given by the field of *group theory*.
 
@@ -213,7 +213,7 @@ This idea is deeply connected to Occam's Razor: "if you have competing theories,
 
 Much of what we will be doing in the following articles is to define precisely what it means for $f|_S$ to contain symmetry. Learning via gradient descent will be seen to be equivalent to doing two things: first, extracting a group $G$ out of the support $S$, then using $f|_S$ together with $G$ to fill in the missing data, and produce the final learned funciton $h_{w_\infty}$. 
 
-### 1.6) Symmetries in the Real World
+## 1.6) Symmetries in the Real World
 
 In the section above, we have given examples of symmetry using functions $f : \R^2 \to \R^3$, which can be visualized as images. Of course, most machine learning applications don't deal with function spaces whose input is 2-dimensional. In computer vision, for example, the input to our function space might be an arrray of 100x100 RGB pixels, and so the dimensionality of the input space $X$ is 30,000. To build intuition, consider the following dataset for an image classification task:
 
@@ -239,7 +239,7 @@ We could go on and on, filling endless pages stating all the ways one can modify
 
 (Well...at least, that is our theory.)
 
-### 1.7) Conclusions
+## 1.7) Conclusions
 
 We've discussed how exceptional the phenomenon of generalization of machine learning models (and of neural networks in particular) really is. And we have seen how experiments showing that neural networks are overparameterized imply that the key to understanding generalization lies in the way gradient descent selects a solution among the many that minimize the loss in the train set.
 
