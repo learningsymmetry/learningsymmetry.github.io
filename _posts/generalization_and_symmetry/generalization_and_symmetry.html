@@ -1706,7 +1706,9 @@ But functions originating in the real world are not always conducive to mathemat
 <p>Furthermore, note how even a single tile (Image 1) is itself full of symmetry. In the case of the tile, it has the same group of symmetries as the dodecagon, a group called <span class="math inline">\(D_{12}\)</span> composed of 12 rotations and 12 reflections. We again only really would need small subset of all the pixels in Image 1 together with the group <span class="math inline">\(D_{12}\)</span> to reconstruct the whole tile.</p>
 <p>These examples should make it clear how symmetry can be used to generalize. If we know the function <span class="math inline">\(f\)</span> has symmetries <span class="math inline">\(G\)</span>, having a point in the support <span class="math inline">\(x\in S\)</span> not only informs us about the value <span class="math inline">\(f(x)\)</span>, but also tells us <span class="math inline">\(f(g\rhd x),\;\forall g\in G\)</span>. We are using <span class="math inline">\(G\)</span> to “fill in” missing data. But all we’ve done is kick the can down the road. Sure, if we knew that the target function <span class="math inline">\(f\)</span> had symmetry <span class="math inline">\(G\)</span>, we could use <span class="math inline">\(G\)</span> to know the value of <span class="math inline">\(f\)</span> on points outside of <span class="math inline">\(S\)</span>. But how can we possibly know that <span class="math inline">\(G\)</span> is a symmetry group of <span class="math inline">\(f\)</span>? If symmetries really are the key to understanding generalization, there can only be one answer: <em><span class="math inline">\(f|_S\)</span> can provide information about the symmetries of <span class="math inline">\(f\)</span></em>. Moreover, gradient descent must be using this information implicitly to choose <span class="math inline">\(w\)</span>, selecting a <span class="math inline">\(h_w\)</span> that matches not just the values of <span class="math inline">\(f|_S\)</span>, but its symmetries as well.</p>
 <p>The idea that the dataset can convery symmetry is, in fact, quite intuitive. Consider a new dataset for the butterfly function:</p>
-<p><img src="https://i.imgur.com/SWNEazym.jpg" /></p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="https://i.imgur.com/SWNEazy.jpg" width="200px" /></p>
+</div>
 <p>From the top half of this dataset, we have strong evidence that the image is symmetric under reflecitons. On the bottom half, we only have partial information on the function, but nothing that we observe contradicts the idea that the function has reflective symmetry. By combining the values observed on the bottom-left with the symmetry observed on the top, we can deduce the missing values on the bottom-right.</p>
 <p>This idea is deeply connected to Occam’s Razor: “if you have competing theories, the simpler one is better.” Concretely, the compteting theories are all the functions <span class="math inline">\(h_w\)</span> that fit <span class="math inline">\(f|_S\)</span>, and the notion of simplicity is related to how symmetric <span class="math inline">\(h_w\)</span> is. We believe this perspecive might provide a path to achieving our third goal, “can we be confident we’ve learned the right function <span class="math inline">\(h(w_\infty) = f\)</span>, just from the dataset?”. Perhaps we can be confident if there is only one highly symmetric <span class="math inline">\(h_w\)</span> that fits the dataset.</p>
 <p>Much of what we will be doing in the following articles is to define precisely what it means for <span class="math inline">\(f|_S\)</span> to contain symmetry. Learning via gradient descent will be seen to be equivalent to doing two things: first, extracting a group <span class="math inline">\(G\)</span> out of the support <span class="math inline">\(S\)</span>, then using <span class="math inline">\(f|_S\)</span> together with <span class="math inline">\(G\)</span> to fill in the missing data, and produce the final learned funciton <span class="math inline">\(h_{w_\infty}\)</span>.</p>
@@ -1738,7 +1740,24 @@ But functions originating in the real world are not always conducive to mathemat
 <p>What do symmetries on this space look like? Before, the group elements <span class="math inline">\(g\in G\)</span> sent each coordinate to another coordinate in a way that preserves the pixel’s color, now <span class="math inline">\(g\in G\)</span> sends each image to another image while preserving its class.
 Let’s build some intuition about what symmetries the function that classifies hotdogs might have. What type of movements of the 30,000-dimensional space preserve the class of the images?</p>
 <p>One example of such a symmetry might be “add ketchup”. For any image in the dataset, adding or removing ketchup will not change its class: a hotdog is still a hotdog with ketchup on it, and the Eiffel Tower is still <em>not</em> a hotdog, even if we slather it in condiments.</p>
-<p><img src="https://i.imgur.com/gVPqfPsm.png" /></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Not hotdog</th>
+<th>Also not hotdog</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><img src="https://i.imgur.com/Ckgsdsbm.jpeg" /></td>
+<td><img src="https://i.imgur.com/gVPqfPsm.png" /></td>
+</tr>
+</tbody>
+</table>
 <p>Other symmetric transformations include to changing the camera angle, rotating the subject 180 degrees, bringing the center into soft focus, changing the time of day, changing the contents of the background…</p>
 <p>We could go on and on, filling endless pages stating all the ways one can modify an image in a way that preserves its category, and wouldn’t even make a dent in the full list. But through analysis of a dataset of millions of images, these incredibly complicated symmetries start to become evident, and are picked up by gradient descent. Each time one is discovered, it unlocks a whole new region of generalization.</p>
 <p>(Well…at least, that is our theory.)</p>

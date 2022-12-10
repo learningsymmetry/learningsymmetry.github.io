@@ -201,7 +201,9 @@ These examples should make it clear how symmetry can be used to generalize. If w
 
 The idea that the dataset can convery symmetry is, in fact, quite intuitive. Consider a new dataset for the butterfly function:
 
-![](https://i.imgur.com/SWNEazym.jpg)
+```{r out.width='200px', echo=FALSE}
+knitr::include_graphics("https://i.imgur.com/SWNEazy.jpg")
+```
 
 From the top half of this dataset, we have strong evidence that the image is symmetric under reflecitons. On the bottom half, we only have partial information on the function, but nothing that we observe contradicts the idea that the function has reflective symmetry. By combining the values observed on the bottom-left with the symmetry observed on the top, we can deduce the missing values on the bottom-right.
 
@@ -225,7 +227,9 @@ Let's build some intuition about what symmetries the function that classifies ho
 
 One example of such a symmetry might be "add ketchup". For any image in the dataset, adding or removing ketchup will not change its class: a hotdog is still a hotdog with ketchup on it, and the Eiffel Tower is still *not* a hotdog, even if we slather it in condiments.
 
-![](https://i.imgur.com/gVPqfPsm.png)
+| Not hotdog | Also not hotdog | 
+| -------- | -------- |
+| ![](https://i.imgur.com/Ckgsdsbm.jpeg) | ![](https://i.imgur.com/gVPqfPsm.png) |
 
 Other symmetric transformations include to changing the camera angle, rotating the subject 180 degrees, bringing the center into soft focus, changing the time of day, changing the contents of the background...
 
