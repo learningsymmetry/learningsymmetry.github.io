@@ -3,7 +3,6 @@ title: "Learning & Symmetry Group"
 description: |
   Research homepage for the Learning & Symmetry Group.
 base_url: https://learningsymmetry.github.io
-output_dir: "docs"
 theme: theme.css
 navbar:
   left:
