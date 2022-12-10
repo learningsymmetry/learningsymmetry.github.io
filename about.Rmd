@@ -1,0 +1,16 @@
+---
+title: "About this blog"
+description: |
+  Some additional details about the blog
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+
+We are a group of researchers studying theoretical deep learning. On this page, we'll be sharing our results. This is an experiment on open research. These articles are live, we will continue updating them as progress is made.
+
+Members:
+- Carles Gelada
+- Jacob Buckman
