@@ -39,7 +39,7 @@ $$
 
 ### 1.1) The Learning of Functions
 
-At its core, machine learning is about fitting functions to data. There is a target function $f: X\to Y$ between two spaces that we'd like to learn. The input space $X$ might be text sequences, images encoded as arrays of pixels, sound waves, etc. Similarly, the output space $Y$ could be numbers, text, images, etc.
+At its core, machine learning is about fitting a function to data. There is a target function $f: X\to Y$ between two spaces that we'd like to learn. The input space $X$ might be text sequences, images encoded as arrays of pixels, sound waves, etc. Similarly, the output space $Y$ could be numbers, text, images, etc.
 
 For example, one might want to learn a function which takes as input an image of a person, and outputs an estimate of that person's height: for this application, the input space would be the space of images, and the output space would be the space of positive real numbers. In image reconstruction, the input is a corrupted/low-quality image and the output is the original, high-quality version, so image reconstruction is a mapping from the space of images to itself. In audio transcription, the input is a person speaking and the output is the text of what was said, so audio transcription maps from the space of sound waves to the space of text strings. If we are instead interested in audio synthesis, we can simply reverse this, and instead learn a mapping from the space of text strings to the space of sound waves. You get the idea. This is a very flexible approach, and it can model all sorts of tasks.
 
