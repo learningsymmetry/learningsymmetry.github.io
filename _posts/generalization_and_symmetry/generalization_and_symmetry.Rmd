@@ -94,7 +94,7 @@ NOTE: Add image or JS viz showing the two regions $X_c, X_e$ in green and red re
 
 Ultimately, generalization is about giving something to the learning process and receiving more in return. We only know $f|_S$, and in return we receive $f|_{X_c}$. The fact that $X_c$ is larger than $S$ might not seem impressive at first glance; after all, even if we pick the parameters $w$ at random, there might still be some points in $X - S$ where the predictions of $h_w$ are correct by pure coincidence. But a learning algorithm that produces correct regions $X_c$ which are consistently much larger than $S$ is something powerful indeed.
 
-However, there is something very important to note about generalization. Since our target $f$ could be an arbitrary function, when we only have access to the dataset $f|_S$, the only points $x$ for which we can be *absolutely sure* of the value $f(x)$ are the points in $S$ themselves. For $x\not\in S$, $f(x)$ *could* take any value in $Y$, and thus no matter how we construct our function space or what learning algorithm we use, there will always be functions $f$ for which $X_c = S$. That is: for *any* learning algorithm, we can always construct $f,S$ for which the function learned by the algorithm gets all the predictions wrong outside of $S$. Thus, **for a arbitrary target function $f$, generalization is impossible**. This idea is often discussed as the *no-free-lunch* principle.
+However, there is something very important to note about generalization. Since our target $f$ could be an arbitrary function, when we only have access to the dataset $f|_S$, the only points $x$ for which we can be *absolutely sure* of the value $f(x)$ are the points in $S$ themselves. For $x\not\in S$, $f(x)$ *could* take any value in $Y$, and thus no matter how we construct our function space or what learning algorithm we use, there will always be functions $f$ for which $X_c = S$. That is: for *any* learning algorithm, we can always construct $f,S$ for which the function learned by the algorithm gets all the predictions wrong outside of $S$. Thus, **for an arbitrary target function $f$, generalization is impossible**. This idea is often discussed as the *no-free-lunch* principle.
 
 But the reason the field of ML has exploded is that we've found an approach which generalizes incredibly well on a vast variety of real-world tasks. How can we square these two facts? The key is a crucial assumption underpinning the no-free-lunch theorem: it only applies when $f$ is arbitrary. If we restrict our interest to a specific *subset* of functions or supports with some useful structure, the no-free-lunch principle does not apply. We can therefore resolve this apparent contradiction by noting that the space of "real-world tasks" to which we apply machine learning is far smaller than the space of all possible functions. To explain generalization, then, requires both characterizing the set of all real-world tasks, and demonstrating that our learning algorithms are guaranteed to generalize on this set.
 
@@ -104,11 +104,11 @@ Another way to apprciate the reach of the generalization abilities of neural net
 
 ![](https://i.imgur.com/8foVvCYm.jpg)           | ![](https://i.imgur.com/WHkWsKMm.jpg) | ![](https://i.imgur.com/hJLfOrwm.jpg)
 :-------------------------:|:-------------------------:|:-------------------------:
-"Photo of hip hop cow in a denim jacket recording a hit single in the studio" | "An italian town made of pasta, tomatoes, basil and parmesan" |“Spider-Man from Ancient Rome” 
+"Photo of hip hop cow in a denim jacket recording a hit single in the studio" | "An Italian town made of pasta, tomatoes, basil and parmesian" |“Spider-Man from Ancient Rome” 
 
 While the datasets used in training are as large as technologically viable, the few hundred million text-image pairs that are included in the dataset are negilgible compared to the sheer combinatorial complexity of the space of text inputs, which is of course much larger than even the number of positions in the game of chess.
 
-How can neural networks trained with gradient descent possibly return so much more than they are given? That is fundamental mystery of generalization.
+How can neural networks trained with gradient descent possibly return so much more than they are given? That is the fundamental mystery of generalization.
 
 ## 1.3) The Overparametrized Regime
 
