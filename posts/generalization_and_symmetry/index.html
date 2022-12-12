@@ -2394,7 +2394,7 @@ But functions originating in the real world are not always conducive to mathemat
 <div class="layout-chunk" data-layout="l-body">
 <p><img src="https://i.imgur.com/SWNEazy.jpg" width="200px" /></p>
 </div>
-<p>From the top half of this dataset, we have strong evidence that the image is symmetric under reflecitons. On the bottom half, we only have partial information on the function, but nothing that we observe contradicts the idea that the function has reflective symmetry. By combining the values observed on the bottom-left with the symmetry observed on the top, we can deduce the missing values on the bottom-right.</p>
+<p>From the top half of this dataset, we have strong evidence that the image is symmetric under reflections. On the bottom half, we only have partial information on the function, but nothing that we observe contradicts the idea that the function has reflective symmetry. By combining the values observed on the bottom-left with the symmetry observed on the top, we can deduce the missing values on the bottom-right.</p>
 <p>This idea is deeply connected to Occam’s Razor: “if you have competing theories, the simpler one is better.” Concretely, the compteting theories are all the functions <span class="math inline">\(h_w\)</span> that fit <span class="math inline">\(f|_S\)</span>, and the notion of simplicity is related to how symmetric <span class="math inline">\(h_w\)</span> is. We believe this perspecive might provide a path to achieving our third goal, “can we be confident we’ve learned the right function <span class="math inline">\(h(w_\infty) = f\)</span>, just from the dataset?”. Perhaps we can be confident if there is only one highly symmetric <span class="math inline">\(h_w\)</span> that fits the dataset.</p>
 <p>Much of what we will be doing in the following articles is to define precisely what it means for <span class="math inline">\(f|_S\)</span> to contain symmetry. Learning via gradient descent will be seen to be equivalent to doing two things: first, extracting a group <span class="math inline">\(G\)</span> out of the support <span class="math inline">\(S\)</span>, then using <span class="math inline">\(f|_S\)</span> together with <span class="math inline">\(G\)</span> to fill in the missing data, and produce the final learned funciton <span class="math inline">\(h_{w_\infty}\)</span>.</p>
 <h2 id="symmetries-in-the-real-world">1.6) Symmetries in the Real World</h2>
@@ -2443,7 +2443,7 @@ Let’s build some intuition about what symmetries the function that classifies 
 </tr>
 </tbody>
 </table>
-<p>Other symmetric transformations include to changing the camera angle, rotating the subject 180 degrees, bringing the center into soft focus, changing the time of day, changing the contents of the background…</p>
+<p>Other symmetric transformations include changing the camera angle, rotating the subject 180 degrees, bringing the center into soft focus, changing the time of day, changing the contents of the background…</p>
 <p>We could go on and on, filling endless pages stating all the ways one can modify an image in a way that preserves its category, and wouldn’t even make a dent in the full list. But through analysis of a dataset of millions of images, these incredibly complicated symmetries start to become evident, and are picked up by gradient descent. Each time one is discovered, it unlocks a whole new region of generalization.</p>
 <p>(Well…at least, that is our theory.)</p>
 <h2 id="conclusions">1.7) Conclusions</h2>
